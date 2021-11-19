@@ -163,7 +163,8 @@ exports.refreshJwtToken = async (req, res, next) => {
       process.env.JWT_REFRESH_TOKEN_SECRET
     );
     const user = await User.findById(decoded.id);
-    if (!user) return next(new ErrorResponse('No user found', 404));
+    if (!user)
+      return next(new ErrorResponse('Couldnt update Access Token', 404));
 
     sendUserAuth(user, 200, res);
   } catch (error) {

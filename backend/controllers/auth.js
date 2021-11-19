@@ -36,6 +36,7 @@ exports.register = async (req, res, next) => {
         data: 'Registered Successfully - Check your Emails',
       });
     } catch (error) {
+      await User.findOneAndDelete({ email });
       next(error);
     }
   } catch (error) {

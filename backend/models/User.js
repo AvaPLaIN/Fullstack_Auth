@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpire: Date,
   verified: Boolean,
+  verifiedToken: String,
 });
 
 //! USER MIDDLEWARE
@@ -68,6 +69,17 @@ UserSchema.methods.getResetPasswordToken = function () {
   this.resetPasswordExpire = Date.now() + 10 * (60 * 1000); // Ten Minutes
 
   return resetToken;
+};
+
+UserSchema.methods.getVerifyToken = function () {
+  const verifyToken = crypto.randomBytes(20).toString('hex');
+
+  this.verifiedToken = crypto
+    .createHash('sha256')
+    .update(verifyToken)
+    .digest('hex');
+
+  return verifyToken;
 };
 
 const User = mongoose.model('User', UserSchema);

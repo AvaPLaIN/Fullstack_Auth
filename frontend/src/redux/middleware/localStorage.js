@@ -11,7 +11,7 @@ export const localStorageMiddleware = ({ getState }) => {
   };
 };
 
-export const reHydrateStore = () => {
+export const loadLocalStorage = () => {
   const data = localStorage.getItem('data');
   if (data) return JSON.parse(data);
   return undefined;

@@ -5,7 +5,7 @@ import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import {
   localStorageMiddleware,
-  reHydrateStore,
+  loadLocalStorage,
 } from './middleware/localStorage';
 
 //     * REDUCERS
@@ -26,7 +26,7 @@ const reducer = combineReducers({
 //* STORE
 const store = createStore(
   reducer,
-  reHydrateStore(),
+  loadLocalStorage(),
   applyMiddleware(...middleware)
 );
 

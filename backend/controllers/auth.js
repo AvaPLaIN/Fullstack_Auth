@@ -17,10 +17,10 @@ exports.register = async (req, res, next) => {
       verified: false,
     });
 
-    const verifyToken = user.getVerifyToken();
+    const verifyToken = user.getValidateToken();
     await user.save();
 
-    const verifyUrl = `http://localhost:3000/verify/${verifyToken}`;
+    const verifyUrl = `http://localhost:3000/validate/${verifyToken}`;
     const message = `
       <h1>Please verify your Email!</h1>
       <p>Click <a clicktracking=off href=${verifyUrl}>Here</a> to Verify your Email</p>
@@ -73,10 +73,10 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.verify = async (req, res, next) => {
+exports.validate = async (req, res, next) => {
   const verifiedToken = crypto
     .createHash('sha256')
-    .update(req.params.verifiedToken)
+    .update(req.params.validateToken)
     .digest('hex');
 
   try {
@@ -90,6 +90,41 @@ exports.verify = async (req, res, next) => {
     await user.save();
 
     return res.status(201).json({ success: true, data: 'User verified' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.verify = async (req, res, next) => {
+  const { username, email, id, accessToken, refreshToken } = req.body;
+
+  if (!username || !email || !id || !accessToken || !refreshToken)
+    return next(new ErrorResponse('Provide Credentials', 400));
+
+  try {
+    const decodedAccessToken = jwt.verify(
+      accessToken,
+      process.env.JWT_ACCESS_TOKEN_SECRET
+    );
+    const decodedRefreshToken = jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_TOKEN_SECRET
+    );
+
+    const accessTokenExpired = decodedAccessToken.exp < Date.now() / 1000;
+    const refreshTokenExpired = decodedRefreshToken.exp < Date.now() / 1000;
+
+    if (accessTokenExpired && refreshTokenExpired)
+      return next(new ErrorResponse('Please login again', 401));
+
+    const user = await User.findById(id);
+
+    if (!user) return next(new ErrorResponse('Error', 400));
+
+    //TODO compare user values -> logout when different
+    //TODO save accessToken, refreshToken in User -> only allow when match
+
+    sendUserAuth(user, 200, res);
   } catch (error) {
     next(error);
   }

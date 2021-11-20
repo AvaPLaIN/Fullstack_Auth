@@ -71,7 +71,7 @@ UserSchema.methods.getResetPasswordToken = function () {
   return resetToken;
 };
 
-UserSchema.methods.getVerifyToken = function () {
+UserSchema.methods.getValidateToken = function () {
   const verifyToken = crypto.randomBytes(20).toString('hex');
 
   this.verifiedToken = crypto

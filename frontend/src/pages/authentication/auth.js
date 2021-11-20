@@ -29,11 +29,6 @@ const Auth = () => {
     );
   };
 
-  const handleLogout = (event) => {
-    event.preventDefault();
-    dispatch(user_logout());
-  };
-
   return (
     <AuthComponent>
       <form onSubmit={handleLogin} className="login">
@@ -47,9 +42,6 @@ const Auth = () => {
         <input type="password" placeholder="Password..." />
         <input type="confirmPassword" placeholder="Confirm Password..." />
         <button type="submit">Register</button>
-      </form>
-      <form onSubmit={handleLogout}>
-        <button type="submit">Logout</button>
       </form>
     </AuthComponent>
   );

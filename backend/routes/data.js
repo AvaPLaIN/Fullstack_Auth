@@ -7,6 +7,6 @@ const { getData } = require('../controllers/data');
 //! IMPORT MIDDLEWARE
 const { protect } = require('../middleware/auth');
 
-router.route('/').get(protect, getData);
+router.route('/all').get(protect, getData);
 
 module.exports = router;

@@ -17,6 +17,7 @@ function App() {
 
   useEffect(() => {
     if (Object.keys(user?.user).length) dispatch(user_auth(user.user));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

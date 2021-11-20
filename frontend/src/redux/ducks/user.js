@@ -1,4 +1,7 @@
 //* IMPORTS
+//     * LIBRARIES
+import decode from 'jwt-decode';
+
 //     * SERVICES
 import { login, register, verify } from '../../services/user';
 
@@ -116,6 +119,15 @@ export const user_login = (credentials) => async (dispatch) => {
   return dispatch(user_login_success(user.data.user));
 };
 
+//     * LOGOUT
+export const user_logout_success = () => {
+  return { type: USER_LOGOUT };
+};
+export const user_logout = () => async (dispatch) => {
+  localStorage.removeItem('data');
+  dispatch(user_logout_success());
+};
+
 //     * AUTH
 export const user_auth_request = () => {
   return { type: USER_AUTH_REQUEST };
@@ -137,8 +149,20 @@ export const user_auth = (user) => async (dispatch) => {
 
   const verifiedUser = await verify(user);
 
-  if (!verifiedUser?.data && !verifiedUser?.success)
+  if (!verifiedUser?.data && !verifiedUser?.success) {
+    dispatch(user_logout());
     return dispatch(user_auth_failure(verifiedUser.error));
+  }
+
+  const refreshTokens = () => {
+    const timeout = setTimeout(() => {
+      dispatch(user_auth(user));
+    }, (Math.floor(decode(verifiedUser.data.user.accessToken).exp - Date.now() / 1000) - 3600) * 1000);
+
+    return () => clearTimeout(timeout);
+  };
+
+  refreshTokens();
 
   return dispatch(user_auth_success(verifiedUser.data.user));
 };

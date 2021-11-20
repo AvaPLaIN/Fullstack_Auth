@@ -9,7 +9,7 @@ import {
 } from './middleware/localStorage';
 
 //     * REDUCERS
-import userReducer from './ducks/user';
+import userReducer, { USER_LOGOUT } from './ducks/user';
 
 //* MIDDLEWARE
 let middleware = [];
@@ -19,13 +19,19 @@ if (process.env.NODE_ENV !== 'production')
 middleware = [...middleware, thunkMiddleware, localStorageMiddleware];
 
 //* STATES
-const reducer = combineReducers({
+const appReducer = combineReducers({
   user: userReducer,
 });
 
+const rootReducer = (state, action) => {
+  if (action.type === USER_LOGOUT) return appReducer(undefined, action);
+
+  return appReducer(state, action);
+};
+
 //* STORE
 const store = createStore(
-  reducer,
+  rootReducer,
   loadLocalStorage(),
   applyMiddleware(...middleware)
 );

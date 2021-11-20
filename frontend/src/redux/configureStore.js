@@ -3,6 +3,10 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
+import {
+  localStorageMiddleware,
+  reHydrateStore,
+} from './middleware/localStorage';
 
 //     * REDUCERS
 import userReducer from './ducks/user';
@@ -12,7 +16,7 @@ let middleware = [];
 const loggerMiddleware = createLogger({});
 if (process.env.NODE_ENV !== 'production')
   middleware = [...middleware, loggerMiddleware];
-middleware = [...middleware, thunkMiddleware];
+middleware = [...middleware, thunkMiddleware, localStorageMiddleware];
 
 //* STATES
 const reducer = combineReducers({
@@ -20,7 +24,11 @@ const reducer = combineReducers({
 });
 
 //* STORE
-const store = createStore(reducer, {}, applyMiddleware(...middleware));
+const store = createStore(
+  reducer,
+  reHydrateStore(),
+  applyMiddleware(...middleware)
+);
 
 //* EXPORTS
 export default store;

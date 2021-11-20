@@ -20,8 +20,8 @@ const Auth = () => {
     event.preventDefault();
     dispatch(
       user_register({
-        username: 'test',
-        email: 'kevwin.vaossawd995151aawd7&&/223@gmaail.com',
+        username: 'Ava',
+        email: 'kevin.voss99@gmail.com',
         password: '123123',
         confirmPassword: '123123',
       })

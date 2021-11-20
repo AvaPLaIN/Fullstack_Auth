@@ -191,6 +191,7 @@ const sendUserAuth = (user, statusCode, res) => {
         email: user.email,
         accessToken,
         refreshToken,
+        expiresIn: 21600,
       },
     },
   });

@@ -8,7 +8,10 @@ import Auth from './pages/authentication/Auth';
 import Home from './pages/home/Home';
 
 function App() {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // localStorage.setItem('data', JSON.stringify({ user: { username: 'Ava' } }));
+    // localStorage.removeItem('data');
+  }, []);
 
   return (
     <Routes>

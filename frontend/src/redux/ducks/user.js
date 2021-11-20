@@ -109,5 +109,14 @@ export const user_login = (credentials) => async (dispatch) => {
   return dispatch(user_login_success(user.data.user));
 };
 
+//     * AUTH
+export const user_auth_request = () => {};
+
+export const user_auth_success = (user) => {};
+
+export const user_auth_failure = (error) => {};
+
+export const user_auth = (credentials) => async (dispatch) => {};
+
 //* EXPORT
 export default reducer;

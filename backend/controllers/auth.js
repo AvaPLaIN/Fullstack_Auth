@@ -194,6 +194,7 @@ exports.resetPassword = async (req, res, next) => {
   }
 };
 
+//! REMOVE -> work with verify
 exports.refreshJwtToken = async (req, res, next) => {
   const { refreshToken } = req.body;
 

@@ -1,6 +1,6 @@
 //* IMPORTS
 //     * SERVICES
-import { login, register } from '../../services/user';
+import { login, register, verify } from '../../services/user';
 
 //* CONSTANTS
 //     * REGISTER
@@ -12,6 +12,11 @@ export const USER_REGISTER_FAILURE = 'REDUX/USER/USER_REGISTER_FAILURE';
 export const USER_LOGIN_REQUEST = 'REDUX/USER/USER_LOGIN_REQUEST';
 export const USER_LOGIN_SUCCESS = 'REDUX/USER/USER_LOGIN_SUCCESS';
 export const USER_LOGIN_FAILURE = 'REDUX/USER/USER_LOGIN_FAILURE';
+
+//     * AUTH
+export const USER_AUTH_REQUEST = 'REDUX/USER/USER_AUTH_REQUEST';
+export const USER_AUTH_SUCCESS = 'REDUX/USER/USER_AUTH_SUCCESS';
+export const USER_AUTH_FAILURE = 'REDUX/USER/USER_AUTH_FAILURE';
 
 //     * LOGOUT
 export const USER_LOGOUT = 'REDUX/USER/USER_LOGOUT';
@@ -43,6 +48,14 @@ const reducer = (state = initialState, action) => {
     case USER_LOGIN_FAILURE:
       return { ...state, loading: false, user: {}, error: action.payload };
 
+    //     * AUTH
+    case USER_AUTH_REQUEST:
+      return { ...state, loading: true };
+    case USER_AUTH_SUCCESS:
+      return { ...state, loading: false, user: action.payload, error: '' };
+    case USER_AUTH_FAILURE:
+      return { ...state, loading: false, user: {}, error: action.payload };
+
     default:
       return state;
   }
@@ -53,21 +66,18 @@ const reducer = (state = initialState, action) => {
 export const user_register_request = () => {
   return { type: USER_REGISTER_REQUEST };
 };
-
 export const user_register_success = (message) => {
   return {
     type: USER_REGISTER_SUCCESS,
     payload: message,
   };
 };
-
 export const user_register_failure = (error) => {
   return {
     type: USER_REGISTER_FAILURE,
     payload: error,
   };
 };
-
 export const user_register = (credentials) => async (dispatch) => {
   dispatch(user_register_request());
 
@@ -83,40 +93,55 @@ export const user_register = (credentials) => async (dispatch) => {
 export const user_login_request = () => {
   return { type: USER_LOGIN_REQUEST };
 };
-
 export const user_login_success = (user) => {
   return {
     type: USER_LOGIN_SUCCESS,
     payload: user,
   };
 };
-
 export const user_login_failure = (error) => {
   return {
     type: USER_LOGIN_FAILURE,
     payload: error,
   };
 };
-
 export const user_login = (credentials) => async (dispatch) => {
   dispatch(user_login_request());
 
   const user = await login(credentials);
 
   if (!user?.data && !user?.success)
-    return dispatch(user_login_failure(user?.error));
+    return dispatch(user_login_failure(user.error));
 
   return dispatch(user_login_success(user.data.user));
 };
 
 //     * AUTH
-export const user_auth_request = () => {};
+export const user_auth_request = () => {
+  return { type: USER_AUTH_REQUEST };
+};
+export const user_auth_success = (user) => {
+  return {
+    type: USER_AUTH_SUCCESS,
+    payload: user,
+  };
+};
+export const user_auth_failure = (error) => {
+  return {
+    type: USER_AUTH_FAILURE,
+    payload: error,
+  };
+};
+export const user_auth = (user) => async (dispatch) => {
+  dispatch(user_auth_request());
 
-export const user_auth_success = (user) => {};
+  const verifiedUser = await verify(user);
 
-export const user_auth_failure = (error) => {};
+  if (!verifiedUser?.data && !verifiedUser?.success)
+    return dispatch(user_auth_failure(verifiedUser.error));
 
-export const user_auth = (credentials) => async (dispatch) => {};
+  return dispatch(user_auth_success(verifiedUser.data.user));
+};
 
 //* EXPORT
 export default reducer;

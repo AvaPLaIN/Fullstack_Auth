@@ -24,14 +24,12 @@ export const login = async (credentials) => {
 };
 
 export const verify = async (user) => {
-  console.log('first:', user);
   try {
     const data = await axios.post(`${PROXY_URL}/verify`, user);
-    console.log('api: ', data);
-    //return data?.data;
+    return data?.data;
   } catch (error) {
     console.log(error.response.data);
-    // return error.response.data;
+    return error.response.data;
   }
 };
 

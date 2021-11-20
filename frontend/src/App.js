@@ -3,14 +3,20 @@
 import { useEffect } from 'react';
 import { Routes, Route, Redirect } from 'react-router-dom';
 
+//     * REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { user_auth } from './redux/ducks/user';
+
 //     * COMPONENTS
 import Auth from './pages/authentication/Auth';
 import Home from './pages/home/Home';
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   useEffect(() => {
-    // localStorage.setItem('data', JSON.stringify({ user: { username: 'Ava' } }));
-    // localStorage.removeItem('data');
+    if (Object.keys(user?.user).length) dispatch(user_auth(user.user));
   }, []);
 
   return (

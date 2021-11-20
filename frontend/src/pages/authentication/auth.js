@@ -3,11 +3,12 @@
 import { AuthComponent } from './Auth.styled';
 
 //     * REDUX
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { user_login, user_logout, user_register } from '../../redux/ducks/user';
 
 const Auth = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
 
   const handleLogin = (event) => {
     event.preventDefault();

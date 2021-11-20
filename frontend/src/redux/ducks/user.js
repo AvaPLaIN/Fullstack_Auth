@@ -27,7 +27,7 @@ export const USER_LOGOUT = 'REDUX/USER/USER_LOGOUT';
 //* INIT
 const initialState = {
   loading: false,
-  user: {},
+  user: null,
   error: '',
   message: '',
 };

@@ -1,4 +1,6 @@
-import './App.css';
+//* IMPORTS
+//     * REACT
+import { useEffect } from 'react';
 
 function App() {
   return <div></div>;

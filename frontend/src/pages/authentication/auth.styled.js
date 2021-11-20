@@ -1,3 +1,3 @@
 import styled from 'styled-components';
 
-const AuthComponent = styled.div``;
+export const AuthComponent = styled.div``;

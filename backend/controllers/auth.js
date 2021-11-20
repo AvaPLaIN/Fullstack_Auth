@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendEmail');
 
 exports.register = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, confirmPassword } = req.body;
+
+  //TODO check inputs
 
   try {
     const user = await User.create({
@@ -25,16 +27,20 @@ exports.register = async (req, res, next) => {
     `;
 
     try {
-      await sendEmail({
+      const emailExists = await sendEmail({
         to: user.email,
         subject: 'Ava Email Verification',
         html: message,
       });
 
-      res.status(200).json({
-        success: true,
-        data: 'Registered Successfully - Check your Emails',
-      });
+      if (emailExists)
+        return res.status(200).json({
+          success: true,
+          data: 'Registered Successfully - Check your Emails',
+        });
+
+      await User.findOneAndDelete({ email });
+      return next(new ErrorResponse('Email doesnt exists', 400));
     } catch (error) {
       await User.findOneAndDelete({ email });
       next(error);
@@ -178,8 +184,14 @@ const sendUserAuth = (user, statusCode, res) => {
   const refreshToken = user.getSignedJwtRefreshToken();
   res.status(statusCode).json({
     success: true,
-    accessToken,
-    refreshToken,
-    user: { id: user._id, username: user.username, email: user.email },
+    data: {
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        accessToken,
+        refreshToken,
+      },
+    },
   });
 };

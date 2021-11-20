@@ -2,6 +2,7 @@
 //     * REDUX
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 
 //     * REDUCERS
 import userReducer from './ducks/user';
@@ -11,6 +12,7 @@ let middleware = [];
 const loggerMiddleware = createLogger({});
 if (process.env.NODE_ENV !== 'production')
   middleware = [...middleware, loggerMiddleware];
+middleware = [...middleware, thunkMiddleware];
 
 //* STATES
 const reducer = combineReducers({

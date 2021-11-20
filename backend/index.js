@@ -2,6 +2,7 @@ require('dotenv').config({ path: './config.env' });
 const express = require('express');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
+const cors = require('cors');
 
 connectDB();
 const app = express();
@@ -11,6 +12,7 @@ const authRoute = require('./routes/auth');
 const dataRoute = require('./routes/data');
 
 app.use(express.json());
+app.use(cors({ origin: '*' }));
 
 app.use('/api/auth', authRoute);
 app.use('/api/data', dataRoute);

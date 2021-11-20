@@ -14,5 +14,8 @@ export const localStorageMiddleware = ({ getState }) => {
 export const loadLocalStorage = () => {
   const data = localStorage.getItem('data');
   if (data) return JSON.parse(data);
+
+  //TODO verify USER with Backend
+
   return undefined;
 };

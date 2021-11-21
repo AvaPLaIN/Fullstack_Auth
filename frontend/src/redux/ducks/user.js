@@ -27,6 +27,7 @@ export const USER_LOGOUT = 'REDUX/USER/USER_LOGOUT';
 //* INIT
 const initialState = {
   loading: false,
+  isLoggedIn: false,
   user: null,
   error: '',
   message: '',
@@ -47,17 +48,41 @@ const reducer = (state = initialState, action) => {
     case USER_LOGIN_REQUEST:
       return { ...state, loading: true };
     case USER_LOGIN_SUCCESS:
-      return { ...state, loading: false, user: action.payload, error: '' };
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+        error: '',
+        isLoggedIn: true,
+      };
     case USER_LOGIN_FAILURE:
-      return { ...state, loading: false, user: {}, error: action.payload };
+      return {
+        ...state,
+        loading: false,
+        user: {},
+        error: action.payload,
+        isLoggedIn: false,
+      };
 
     //     * AUTH
     case USER_AUTH_REQUEST:
       return { ...state, loading: true };
     case USER_AUTH_SUCCESS:
-      return { ...state, loading: false, user: action.payload, error: '' };
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+        error: '',
+        isLoggedIn: true,
+      };
     case USER_AUTH_FAILURE:
-      return { ...state, loading: false, user: {}, error: action.payload };
+      return {
+        ...state,
+        loading: false,
+        user: {},
+        error: action.payload,
+        isLoggedIn: false,
+      };
 
     default:
       return state;

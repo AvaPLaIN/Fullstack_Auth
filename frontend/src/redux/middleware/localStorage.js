@@ -16,5 +16,5 @@ export const localStorageMiddleware = ({ getState }) => {
 export const loadLocalStorage = () => {
   const data = JSON.parse(localStorage.getItem('data'));
   if (!data || !Object.keys(data).length) return undefined;
-  return data;
+  return { ...data, user: { ...data.user, isLoggedIn: false } };
 };

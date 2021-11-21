@@ -10,6 +10,7 @@ import { user_auth } from './redux/ducks/user';
 //     * COMPONENTS
 import Auth from './pages/authentication/Auth';
 import Home from './pages/home/Home';
+import Loading from './components/loading/Loading';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,17 +22,17 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/auth"
-        exact
-        element={!user?.user ? <Auth /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/"
-        element={user?.user ? <Home /> : <Navigate to="/auth" />}
-      />
-    </Routes>
+    <>
+      {user?.isLoggedIn ? (
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+        </Routes>
+      ) : user?.loading ? (
+        <Loading />
+      ) : (
+        <Auth />
+      )}
+    </>
   );
 }
 

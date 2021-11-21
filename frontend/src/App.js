@@ -1,13 +1,14 @@
 //* IMPORTS
 //     * REACT
 import { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 //     * REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { user_auth } from './redux/ducks/user';
 
 //     * COMPONENTS
+import { AppComponent } from './App.styled';
 import Auth from './pages/authentication/Auth';
 import Home from './pages/home/Home';
 import Loading from './components/loading/Loading';
@@ -22,7 +23,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <AppComponent>
       {user?.isLoggedIn ? (
         <Routes>
           <Route path="/" exact element={<Home />} />
@@ -32,7 +33,7 @@ function App() {
       ) : (
         <Auth />
       )}
-    </>
+    </AppComponent>
   );
 }
 

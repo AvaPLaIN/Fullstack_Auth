@@ -11,7 +11,6 @@ import { user_auth } from './redux/ducks/user';
 import { AppComponent } from './App.styled';
 import Auth from './pages/authentication/Auth';
 import Home from './pages/home/Home';
-import Loading from './components/loading/Loading';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,8 +27,6 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Home />} />
         </Routes>
-      ) : user?.loading ? (
-        <Loading />
       ) : (
         <Auth />
       )}

@@ -1,9 +1,82 @@
+:root {
+  /** FONT SIZE **/
+  /**     HEADER     **/
+  --font-size-header-big: 3rem;
+  --font-size-header-medium: 2.6rem;
+  --font-size-header-small: 2.3rem;
+
+  /**     TEXT     **/
+  --font-size-text-big: 2.2rem;
+  --font-size-text-medium: 1.8rem;
+  --font-size-text-small: 1.4rem;
+
+  /**     FONT-COLOR     **/
+  --font-color-normal: rgb(39, 37, 37);
+  --font-color-greyed: rgb(153, 147, 147);
+  --font-color-white: rgb(245, 239, 239);
+  --font-color-failure: rgb(214, 19, 19);
+  --font-color-success: rgb(46, 156, 60);
+
+  /**     BACKGROUND-COLOR     **/
+  --background-color-main: rgb(39, 37, 37);
+  --background-color-white: rgb(248, 244, 244);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 html {
   font-size: 62.5%;
+}
+
+/** HEADERS **/
+h1 {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+  font-size: var(--font-size-header-big);
+}
+h2 {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+  font-size: var(--font-size-header-big);
+}
+h3 {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 700;
+  font-size: var(--font-size-header-medium);
+}
+h4 {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+  font-size: var(--font-size-header-medium);
+}
+h5 {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+  font-size: var(--font-size-header-small);
+}
+h6 {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 400;
+  font-size: var(--font-size-header-small);
+}
+
+p,
+a,
+input,
+label,
+button,
+svg,
+i {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: var(--font-size-text-medium);
+  text-decoration: none;
+  color: var(--font-color-normal);
+}
+
+label {
+  color: var(--font-color-greyed);
 }

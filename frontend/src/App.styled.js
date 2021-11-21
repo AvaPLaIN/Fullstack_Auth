@@ -5,5 +5,5 @@ export const AppComponent = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #272525ea;
+  background-color: var(--background-color-main);
 `;

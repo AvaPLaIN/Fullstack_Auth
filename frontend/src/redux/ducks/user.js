@@ -24,6 +24,9 @@ export const USER_AUTH_FAILURE = 'REDUX/USER/USER_AUTH_FAILURE';
 //     * LOGOUT
 export const USER_LOGOUT = 'REDUX/USER/USER_LOGOUT';
 
+//     * RESET
+export const USER_RESET_REPORTS = 'REDUX/USER/USER_RESET_REPORTS';
+
 //* INIT
 const initialState = {
   loading: false,
@@ -84,6 +87,10 @@ const reducer = (state = initialState, action) => {
         isLoggedIn: false,
       };
 
+    //     * RESET
+    case USER_RESET_REPORTS:
+      return { ...state, error: '', message: '' };
+
     default:
       return state;
   }
@@ -111,10 +118,14 @@ export const user_register = (credentials) => async (dispatch) => {
 
   const data = await register(credentials);
 
-  if (data?.error && !data?.success)
-    return dispatch(user_login_failure(data?.error));
+  setTimeout(() => {
+    dispatch(user_reset_reports());
+  }, 5000);
 
-  return dispatch(user_login_success(data?.data));
+  if (data?.error && !data?.success)
+    return dispatch(user_register_failure(data?.error));
+
+  return dispatch(user_register_success(data?.data));
 };
 
 //     * LOGIN
@@ -137,6 +148,10 @@ export const user_login = (credentials) => async (dispatch) => {
   dispatch(user_login_request());
 
   const user = await login(credentials);
+
+  setTimeout(() => {
+    dispatch(user_reset_reports());
+  }, 5000);
 
   if (!user?.data && !user?.success)
     return dispatch(user_login_failure(user.error));
@@ -174,6 +189,10 @@ export const user_auth = (user) => async (dispatch) => {
 
   const verifiedUser = await verify(user);
 
+  setTimeout(() => {
+    dispatch(user_reset_reports());
+  }, 5000);
+
   if (!verifiedUser?.data && !verifiedUser?.success) {
     dispatch(user_logout());
     return dispatch(user_auth_failure(verifiedUser.error));
@@ -190,6 +209,13 @@ export const user_auth = (user) => async (dispatch) => {
   refreshTokens();
 
   return dispatch(user_auth_success(verifiedUser.data.user));
+};
+
+//     * RESET
+export const user_reset_reports = () => {
+  return {
+    type: USER_RESET_REPORTS,
+  };
 };
 
 //* EXPORT

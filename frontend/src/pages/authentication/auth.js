@@ -1,47 +1,26 @@
 //* IMPORTS
+//     * REACT
+import { useState } from 'react';
+
 //     * COMPONENTS
 import { AuthComponent } from './Auth.styled';
-
-//     * REDUX
-import { useDispatch } from 'react-redux';
-import { user_login, user_register } from '../../redux/ducks/user';
+import LoginForm from '../../components/forms/login-form/LoginForm';
+import RegisterForm from '../../components/forms/register-form/RegisterForm';
 
 const Auth = () => {
-  const dispatch = useDispatch();
+  //* USE-STATE
+  const [showSignUp, setShowSignUp] = useState(false);
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    dispatch(
-      user_login({ email: 'kevin.voss99@gmail.com', password: '123123' })
-    );
-  };
-
-  const handleRegister = (event) => {
-    event.preventDefault();
-    dispatch(
-      user_register({
-        username: 'Ava',
-        email: 'kevin.voss99@gmail.com',
-        password: '123123',
-        confirmPassword: '123123',
-      })
-    );
-  };
+  //* HANDLER
+  const handleChangeForm = () => setShowSignUp((prev) => !prev);
 
   return (
     <AuthComponent>
-      <form onSubmit={handleLogin} className="login">
-        <input type="text" placeholder="Email..." />
-        <input type="password" placeholder="Password..." />
-        <button type="submit">Login</button>
-      </form>
-      <form onSubmit={handleRegister} className="register">
-        <input type="text" placeholder="Username..." />
-        <input type="text" placeholder="Email..." />
-        <input type="password" placeholder="Password..." />
-        <input type="confirmPassword" placeholder="Confirm Password..." />
-        <button type="submit">Register</button>
-      </form>
+      {showSignUp ? (
+        <RegisterForm showLogin={handleChangeForm} />
+      ) : (
+        <LoginForm showRegister={handleChangeForm} />
+      )}
     </AuthComponent>
   );
 };

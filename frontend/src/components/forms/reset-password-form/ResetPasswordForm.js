@@ -14,16 +14,10 @@ import Loading from '../../loading/Loading';
 //     * FONT AWESOME
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faEnvelope,
   faUnlockAlt,
   faEye,
   faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  faFacebookF,
-  faTwitter,
-  faGoogle,
-} from '@fortawesome/free-brands-svg-icons';
 
 const ResetPasswordForm = () => {
   //* INIT

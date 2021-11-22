@@ -1,7 +1,6 @@
 //* IMPORTS
 //     * REACT
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 //     * REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,18 +32,21 @@ const RegisterForm = ({ showLogin }) => {
 
   //* USE-STATE
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   //* HANDLER
   const handleRegister = (event) => {
     event.preventDefault();
-    dispatch(
-      user_register({
-        username: 'Ava',
-        email: 'kevin.voss99@gmail.com',
-        password: '123123',
-        confirmPassword: '123123',
-      })
-    );
+    dispatch(user_register({ username, email, password, confirmPassword }));
+
+    //* RESET FORM
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
   };
 
   const handleToggleShowPassword = () => {
@@ -61,7 +63,13 @@ const RegisterForm = ({ showLogin }) => {
 
             <div className="input-container">
               <FontAwesomeIcon className="icon" icon={faUser} />
-              <input type="text" id="username" placeholder="Username..." />
+              <input
+                type="text"
+                id="username"
+                placeholder="Username..."
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
           </div>
 
@@ -70,7 +78,13 @@ const RegisterForm = ({ showLogin }) => {
 
             <div className="input-container">
               <FontAwesomeIcon className="icon" icon={faEnvelope} />
-              <input type="text" id="email" placeholder="Email..." />
+              <input
+                type="text"
+                id="email"
+                placeholder="Email..."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
           </div>
 
@@ -83,6 +97,8 @@ const RegisterForm = ({ showLogin }) => {
                 type={showPassword ? 'text' : 'password'}
                 id="password"
                 placeholder="Password..."
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <FontAwesomeIcon
                 onClick={handleToggleShowPassword}
@@ -101,6 +117,8 @@ const RegisterForm = ({ showLogin }) => {
                 type={showPassword ? 'text' : 'password'}
                 id="confirm-password"
                 placeholder="Confirm Password..."
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
           </div>

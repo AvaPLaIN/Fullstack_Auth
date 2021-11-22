@@ -23,14 +23,44 @@ export const login = async (credentials) => {
   }
 };
 
+export const validate = async (token) => {
+  try {
+    const data = await axios.put(`${PROXY_URL}/validate/${token}`, {});
+    console.log(data);
+    return data?.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export const verify = async (user) => {
   try {
     const data = await axios.post(`${PROXY_URL}/verify`, user);
     return data?.data;
   } catch (error) {
-    console.log(error.response.data);
     return error.response.data;
   }
 };
 
-export const resetPassword = () => {};
+export const resetPassword = async (token, password) => {
+  try {
+    const data = await axios.put(`${PROXY_URL}/resetPassword/${token}`, {
+      password,
+    });
+    return data?.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const requestPassword = async (email) => {
+  try {
+    const data = await axios.post(`${PROXY_URL}/forgotPassword`, {
+      email,
+    });
+    console.log('data is here man: ', data);
+    return data?.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};

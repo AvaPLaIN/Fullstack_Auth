@@ -152,7 +152,7 @@ exports.forgotPassword = async (req, res, next) => {
         html: message,
       });
 
-      res.status(200).json({ success: true, data: 'Email sent' });
+      res.status(200).json({ success: true, data: 'Check your Emails' });
     } catch (error) {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
@@ -171,6 +171,9 @@ exports.resetPassword = async (req, res, next) => {
     .createHash('sha256')
     .update(req.params.resetToken)
     .digest('hex');
+
+  if (!req.body.password || req.body.password < 6)
+    return next(new ErrorResponse('Invalid Password'), 400);
 
   try {
     const user = await User.findOne({

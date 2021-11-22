@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 //     * COMPONENTS
 import { AuthComponent } from './Auth.styled';
-import LoginForm from '../../components/forms/login-form/LoginForm';
-import RegisterForm from '../../components/forms/register-form/RegisterForm';
+import LoginForm from '../../../components/forms/login-form/LoginForm';
+import RegisterForm from '../../../components/forms/register-form/RegisterForm';
 
 const Auth = () => {
   //* USE-STATE

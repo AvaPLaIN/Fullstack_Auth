@@ -32,13 +32,17 @@ const LoginForm = ({ showRegister }) => {
 
   //* USE-STATE
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   //* HANDLER
   const handleLogin = (event) => {
     event.preventDefault();
-    dispatch(
-      user_login({ email: 'kevin.voss99@gmail.com', password: '123123' })
-    );
+    dispatch(user_login({ email, password }));
+
+    //* RESET FORM
+    setEmail('');
+    setPassword('');
   };
 
   const handleToggleShowPassword = () => {
@@ -55,7 +59,13 @@ const LoginForm = ({ showRegister }) => {
 
             <div className="input-container">
               <FontAwesomeIcon className="icon" icon={faEnvelope} />
-              <input type="text" id="email" placeholder="Email..." />
+              <input
+                type="text"
+                id="email"
+                placeholder="Email..."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
           </div>
 
@@ -68,6 +78,8 @@ const LoginForm = ({ showRegister }) => {
                 type={showPassword ? 'text' : 'password'}
                 id="password"
                 placeholder="Password..."
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <FontAwesomeIcon
                 onClick={handleToggleShowPassword}
@@ -78,13 +90,14 @@ const LoginForm = ({ showRegister }) => {
           </div>
         </div>
 
-        <Link to="/auth/forgotPassword">Forgot password?</Link>
+        <Link to="/resetPassword">Forgot password?</Link>
 
         <button type="submit" disabled={user.loading}>
           {user.loading ? <Loading /> : 'Login'}
         </button>
 
         <p className="server-error">{user.error}</p>
+        <p className="server-message">{user.message}</p>
       </form>
 
       <div className="social-media-signup">

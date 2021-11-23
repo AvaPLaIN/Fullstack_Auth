@@ -65,6 +65,9 @@ const LoginForm = ({ showRegister }) => {
                 placeholder="Email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                title="email must be a valid email"
               />
             </div>
           </div>
@@ -80,6 +83,9 @@ const LoginForm = ({ showRegister }) => {
                 placeholder="Password..."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
+                pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$"
+                title="password must be 8-30 chars long and must contain Uppercase, Lowercase, Symbol, Number"
               />
               <FontAwesomeIcon
                 onClick={handleToggleShowPassword}

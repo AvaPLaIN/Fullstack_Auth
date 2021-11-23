@@ -60,6 +60,9 @@ const ResetPasswordForm = () => {
                 placeholder="Password..."
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
+                required
+                pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$"
+                title="password must be 8-30 chars long and must contain Uppercase, Lowercase, Symbol, Number"
               />
               <FontAwesomeIcon
                 onClick={handleToggleShowPassword}
@@ -80,6 +83,9 @@ const ResetPasswordForm = () => {
                 placeholder="Confirm Password..."
                 value={confirmPasswordInput}
                 onChange={(e) => setConfirmPasswordInput(e.target.value)}
+                required
+                pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$"
+                title="password must be 8-30 chars long and must contain Uppercase, Lowercase, Symbol, Number"
               />
             </div>
           </div>

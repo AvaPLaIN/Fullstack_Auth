@@ -69,6 +69,9 @@ const RegisterForm = ({ showLogin }) => {
                 placeholder="Username..."
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
+                pattern="^(?=.{3,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
+                title="username must be a valid username"
               />
             </div>
           </div>
@@ -84,6 +87,9 @@ const RegisterForm = ({ showLogin }) => {
                 placeholder="Email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                title="email must be a valid email"
               />
             </div>
           </div>
@@ -99,6 +105,9 @@ const RegisterForm = ({ showLogin }) => {
                 placeholder="Password..."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
+                pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$"
+                title="password must be 8-30 chars long and must contain Uppercase, Lowercase, Symbol, Number"
               />
               <FontAwesomeIcon
                 onClick={handleToggleShowPassword}
@@ -119,6 +128,9 @@ const RegisterForm = ({ showLogin }) => {
                 placeholder="Confirm Password..."
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$"
+                title="password must be 8-30 chars long and must contain Uppercase, Lowercase, Symbol, Number"
               />
             </div>
           </div>

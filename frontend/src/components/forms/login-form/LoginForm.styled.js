@@ -58,6 +58,18 @@ export const LoginFormComponent = styled.div`
             border: none;
             outline: none;
             padding: 1rem;
+
+            &:invalid {
+              &:not(:placeholder-shown) {
+                border-left: 2px solid red;
+              }
+            }
+
+            &:valid {
+              &:not(:placeholder-shown) {
+                border-left: 2px solid green;
+              }
+            }
           }
         }
       }

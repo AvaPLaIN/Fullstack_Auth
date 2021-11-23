@@ -46,6 +46,9 @@ const RequestPasswordForm = () => {
                 placeholder="Email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                title="email must be a valid email"
               />
             </div>
           </div>

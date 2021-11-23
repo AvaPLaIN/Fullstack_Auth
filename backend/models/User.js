@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, 'Provide username'],
+    match: [
+      /^(?=.{3,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
+      'Provide valid username',
+    ],
   },
   email: {
     type: String,
@@ -23,6 +27,10 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Provide password '],
     minlength: 6,
     select: false,
+    match: [
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/,
+      'Provide valid password',
+    ],
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,

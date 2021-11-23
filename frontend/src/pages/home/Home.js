@@ -26,6 +26,7 @@ const Home = () => {
 
   return (
     <HomeComponent>
+      <h1>Hello {user.username}</h1>
       <form onSubmit={handleLogout}>
         <button type="submit">Logout</button>
       </form>

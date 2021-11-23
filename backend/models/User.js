@@ -5,11 +5,11 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 //     * VALIDATE
-import {
+const {
   validateEmail,
   validateUsername,
   validatePassword,
-} from '../utils/validate';
+} = require('../utils/validate');
 
 //! SCHEMA
 const UserSchema = new mongoose.Schema({

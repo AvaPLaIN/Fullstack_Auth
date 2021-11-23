@@ -1,13 +1,30 @@
+//* IMPORTS
 const crypto = require('crypto');
 const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendEmail');
 
+//     * VALIDATE
+const {
+  validateUsername,
+  validatePassword,
+  validateEmail,
+} = require('../utils/validate');
+
 exports.register = async (req, res, next) => {
   const { username, email, password, confirmPassword } = req.body;
 
-  //TODO check inputs
+  //* INPUT VALIDATION
+  if (password != confirmPassword)
+    return next(new ErrorResponse('Passwords do not match', 400));
+
+  if (
+    !validateUsername(username) ||
+    !validatePassword(password) ||
+    !validateEmail(email)
+  )
+    return next(new ErrorResponse('Provide valid Credentials', 400));
 
   try {
     const user = await User.create({
@@ -167,13 +184,19 @@ exports.forgotPassword = async (req, res, next) => {
 };
 
 exports.resetPassword = async (req, res, next) => {
+  const { password, confirmPassword } = req.body;
+
+  //* INPUT VALIDATION
+  if (password != confirmPassword)
+    return next(new ErrorResponse('Passwords do not match', 400));
+
+  if (!validatePassword(password))
+    return next(new ErrorResponse('Provide valid password', 400));
+
   const resetPasswordToken = crypto
     .createHash('sha256')
     .update(req.params.resetToken)
     .digest('hex');
-
-  if (!req.body.password || req.body.password < 6)
-    return next(new ErrorResponse('Invalid Password'), 400);
 
   try {
     const user = await User.findOne({
@@ -183,7 +206,7 @@ exports.resetPassword = async (req, res, next) => {
 
     if (!user) return next(new ErrorResponse('Invalid Reset Token'), 400);
 
-    user.password = req.body.password;
+    user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 

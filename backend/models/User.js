@@ -19,7 +19,6 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     minlength: 3,
     maxlength: 30,
-    validate: [validateUsername, 'Provide valid username'],
     match: [
       /^(?=.{3,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
       'Provide valid username',
@@ -32,7 +31,6 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     minlength: 2,
     unique: true,
-    validate: [validateEmail, 'Provide valid email'],
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       'Provide valid email',
@@ -43,13 +41,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Provide password '],
     trim: true,
     minlength: 8,
-    maxlength: 30,
     select: false,
-    validate: [validatePassword, 'Provide valid password'],
-    match: [
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/,
-      'Provide valid password',
-    ],
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
@@ -63,6 +55,7 @@ UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) next();
 
   const salt = await bcrypt.genSalt(10);
+
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });

@@ -33,7 +33,9 @@ const ResetPasswordForm = () => {
   //* HANDLER
   const handleResetPassword = (event) => {
     event.preventDefault();
-    dispatch(user_reset_password(params.token, passwordInput));
+    dispatch(
+      user_reset_password(params.token, passwordInput, confirmPasswordInput)
+    );
     setPasswordInput('');
     setConfirmPasswordInput('');
   };

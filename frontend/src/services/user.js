@@ -42,10 +42,11 @@ export const verify = async (user) => {
   }
 };
 
-export const resetPassword = async (token, password) => {
+export const resetPassword = async (token, password, confirmPassword) => {
   try {
     const data = await axios.put(`${PROXY_URL}/resetPassword/${token}`, {
       password,
+      confirmPassword,
     });
     return data?.data;
   } catch (error) {

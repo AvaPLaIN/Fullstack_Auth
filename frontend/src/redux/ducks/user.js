@@ -307,19 +307,20 @@ export const user_reset_password_failure = (error) => {
     payload: error,
   };
 };
-export const user_reset_password = (token, password) => async (dispatch) => {
-  dispatch(user_reset_password_request());
+export const user_reset_password =
+  (token, password, confirmPassword) => async (dispatch) => {
+    dispatch(user_reset_password_request());
 
-  const newPassword = await resetPassword(token, password);
+    const newPassword = await resetPassword(token, password, confirmPassword);
 
-  reset_reports(dispatch, 5000);
+    reset_reports(dispatch, 5000);
 
-  if (!newPassword?.data && !newPassword?.success) {
-    return dispatch(user_reset_password_failure(newPassword.error));
-  }
+    if (!newPassword?.data && !newPassword?.success) {
+      return dispatch(user_reset_password_failure(newPassword.error));
+    }
 
-  return dispatch(user_reset_password_success(newPassword.data));
-};
+    return dispatch(user_reset_password_success(newPassword.data));
+  };
 
 //     * REQUEST PASSWORD
 export const user_request_password_request = () => {

@@ -1,13 +1,23 @@
+//* IMPORTS
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+
+//     * VALIDATE
+import {
+  validateEmail,
+  validateUsername,
+  validatePassword,
+} from '../utils/validate';
 
 //! SCHEMA
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, 'Provide username'],
+    trim: true,
+    validate: [validateUsername, 'Provide valid username'],
     match: [
       /^(?=.{3,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
       'Provide valid username',
@@ -16,7 +26,10 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Provide email'],
+    lowercase: true,
+    trim: true,
     unique: true,
+    validate: [validateEmail, 'Provide valid email'],
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       'Provide valid email',
@@ -25,8 +38,11 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Provide password '],
-    minlength: 6,
+    trim: true,
+    minlength: 8,
+    maxlength: 30,
     select: false,
+    validate: [validatePassword, 'Provide valid password'],
     match: [
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,30}$/,
       'Provide valid password',

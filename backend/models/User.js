@@ -17,6 +17,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Provide username'],
     trim: true,
+    minlength: 3,
+    maxlength: 30,
     validate: [validateUsername, 'Provide valid username'],
     match: [
       /^(?=.{3,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
@@ -28,6 +30,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Provide email'],
     lowercase: true,
     trim: true,
+    minlength: 2,
     unique: true,
     validate: [validateEmail, 'Provide valid email'],
     match: [

@@ -37,7 +37,9 @@ exports.register = async (req, res, next) => {
     const verifyToken = user.getValidateToken();
     await user.save();
 
-    const verifyUrl = `http://localhost:3000/validate/${verifyToken}`;
+    const verifyUrl = `${
+      process.env.BACKEND_API_URL || 'http://localhost:3000'
+    }/validate/${verifyToken}`;
     const message = `
       <h1>Please verify your Email!</h1>
       <p>Click <a clicktracking=off href=${verifyUrl}>Here</a> to Verify your Email</p>
@@ -156,7 +158,9 @@ exports.forgotPassword = async (req, res, next) => {
     const resetToken = user.getResetPasswordToken();
     await user.save();
 
-    const resetUrl = `http://localhost:3000/resetPassword/${resetToken}`;
+    const resetUrl = `${
+      process.env.BACKEND_API_URL || 'http://localhost:3000'
+    }/resetPassword/${resetToken}`;
     const message = `
       <h1>You´ve requested a new Password</h1>
       <p>Click <a clicktracking=off href=${resetUrl}>Here</a> to Reset the Password</p>
